@@ -1,0 +1,15 @@
+<div class="file-merge">
+  <h3>Choose files to merge</h3>
+  <input type="file" #fileInput multiple (change)="onFileSelect($event)">
+  <button class="select-button" (click)="fileInput.click()">Select Files</button>
+  <button class="merge-button" (click)="mergeFiles()">Merge</button>
+
+  <div class="selected-files" *ngIf="selectedFiles && selectedFiles.length > 0">
+    <h4>Selected Files:</h4>
+    <ul>
+      <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+    </ul>
+  </div>
+
+  <p>{{ mergeStatus }}</p>
+</div>
