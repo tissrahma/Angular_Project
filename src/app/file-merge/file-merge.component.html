@@ -1,15 +1,28 @@
 <div class="file-merge">
-  <h3>Choose files to merge</h3>
-  <input type="file" #fileInput multiple (change)="onFileSelect($event)">
-  <button class="select-button" (click)="fileInput.click()">Select Files</button>
-  <button class="merge-button" (click)="mergeFiles()">Merge</button>
-
-  <div class="selected-files" *ngIf="selectedFiles && selectedFiles.length > 0">
+  <div class="selected-files" *ngIf="selectedFiles.length > 0">
     <h4>Selected Files:</h4>
     <ul>
-      <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+      <li *ngFor="let file of selectedFiles">
+        <span class="file-details">{{ file.name }} ({{file.size }})</span>
+      </li>
     </ul>
   </div>
-
-  <p>{{ mergeStatus }}</p>
+  <div class="merged-files" *ngIf="mergedFiles.length > 0">
+    <h3>Merged Files:</h3>
+    <ul>
+      <li *ngFor="let file of mergedFiles">
+        <span class="file-details">{{ file.name }} ({{file.size}})</span>
+        <button class="delete-button" (click)="deleteFile(file.fileid)">Delete</button>
+      </li>
+    </ul>
+  </div>
+  <div class="button-container">
+    <input type="file" #fileInput multiple (change)="onFileSelect($event)">
+    <button class="select-button" (click)="fileInput.click()">Select Files</button>
+    <button class="select-button" (click)="fetchMergedFiles()">Refresh</button>
+    <button class="select-button" (click)="mergeFiles()">Merge Files</button>
+  </div>
+  <div class="merge-status" [ngClass]="{'merge-success': mergeStatus === 'Merge is done!', 'merge-error': mergeStatus?.startsWith('Error')}">
+    {{ mergeStatus }}
+  </div>
 </div>
